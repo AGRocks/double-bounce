@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using Traininghub.Data;
 
-namespace Traininghub.Data
+namespace traininghub.api.ViewModels
 {
-    public class Game : IClientEntity
+    public class GameViewModel
     {
         public int Id { get; set; }
         public Sport Sport { get; set; }
@@ -16,11 +17,5 @@ namespace Traininghub.Data
         public SkillLevel SkillLevel { get; set; }
         public Status Status { get; set; }
         public int UserId { get; set; }
-        
-        public virtual User User { get; set; }
-        public virtual Venue Venue { get; set; }
-
-        public virtual ICollection<AcceptedGameInvitation> AcceptedGameInvitations { get; set; }
-        public virtual ICollection<User> Users { get; set; }
     }
 }

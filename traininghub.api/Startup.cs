@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using traininghub.api.AutoMapper;
 
 namespace traininghub.api
 {
@@ -33,6 +34,8 @@ namespace traininghub.api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            AutoMapperConfig.Configure();
 
             app.UseMvc();
         }
