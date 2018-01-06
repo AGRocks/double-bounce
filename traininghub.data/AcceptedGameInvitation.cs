@@ -7,8 +7,6 @@ namespace Traininghub.Data
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-
-        [ForeignKey("UserId")]
         public virtual User User { get; set; }
         public DateTime AcceptedTime { get; set; }
     }

@@ -1,10 +1,10 @@
-﻿using System.Data.Entity;
+﻿using System.Linq;
 using Traininghub.Data;
 
 namespace traininghub.dac.ef.Common
 {
     public interface IDbDataProvider
     {
-        IDbSet<T> GetDbSet<T>() where T : class, IClientEntity;
+        IQueryable<T> AsQueryable<T>() where T : class, IClientEntity;
     }
 }

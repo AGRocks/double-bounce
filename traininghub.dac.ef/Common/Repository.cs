@@ -16,7 +16,7 @@ namespace traininghub.dac.ef.Common
 
         public Repository(IDbDataProvider dataProvider)
         {
-            this.context = dataProvider.GetDbSet<T>();
+            this.context = dataProvider.AsQueryable<T>();
             this.dataProvider = dataProvider;
             unitOfWork = dataProvider as IUnitOfWork;
         }

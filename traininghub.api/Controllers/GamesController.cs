@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using traininghub.api.ViewModels;
 using traininghub.core;
 using traininghub.dac.ef.Common;
@@ -56,7 +53,7 @@ namespace traininghub.api.Controllers
                        .Select(x => this.mapper.Map<GameViewModel>(x));
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("accept")]
         public IActionResult AcceptGame(int gameId, int userId)
         {
@@ -71,7 +68,7 @@ namespace traininghub.api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("create")]
         public IActionResult CreateGame(GameViewModel game)
         {

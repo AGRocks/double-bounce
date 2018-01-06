@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using traininghub.api.AutoMapper;
+using traininghub.dac.ef;
+using traininghub.dac.ef.Common;
+using Traininghub.Data;
 
 namespace traininghub.api
 {
@@ -24,7 +29,14 @@ namespace traininghub.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TrainingHubContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddMvc();
+
+            services.AddTransient<IMapper>((s) => Mapper.Instance);
+            services.AddTransient<IDbDataProvider, TrainingHubContext>();
+            services.AddTransient<IReadOnlyRepository<Game>, ReadOnlyRepository<Game>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

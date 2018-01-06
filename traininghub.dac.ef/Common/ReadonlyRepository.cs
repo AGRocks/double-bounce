@@ -7,13 +7,13 @@ using Traininghub.Data;
 
 namespace traininghub.dac.ef.Common
 {
-    public class ReadonlyRepository<T> : IReadOnlyRepository<T> where T: class, IClientEntity
+    public class ReadOnlyRepository<T> : IReadOnlyRepository<T> where T: class, IClientEntity
     {
-        private IQueryable<T> context;
+        private readonly IQueryable<T> context;
 
-        public ReadonlyRepository(IDbDataProvider dataProvider)
+        public ReadOnlyRepository(IDbDataProvider dataProvider)
         {
-            this.context = dataProvider.GetDbSet<T>().AsQueryable();
+            this.context = dataProvider.AsQueryable<T>();
         }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
