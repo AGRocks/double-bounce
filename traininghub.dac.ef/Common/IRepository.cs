@@ -6,10 +6,11 @@ using Traininghub.Data;
 
 namespace traininghub.dac.ef.Common
 {
-    public interface IRepository<T> : IReadOnlyRepository<T> where T: class, IClientEntity
+    public interface IRepository<T> : IUnitOfWork, IReadOnlyRepository<T> where T: class, IClientEntity
     {
         void Insert(T entity);
-        void Delete(T entity);
-        void Attach(T entity);        
+        void Delete(int id);
+        void Attach(T entity);
+        void Save();
     }
 }

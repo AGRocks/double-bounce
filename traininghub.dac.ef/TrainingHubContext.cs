@@ -10,7 +10,7 @@ namespace traininghub.dac.ef
         public DbSet<Game> Game { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Venue> Venue { get; set; }
-        public DbSet<AcceptedGameInvitation> AcceptedGameInvitations { get; set; }
+        public DbSet<Challenge> Challenge { get; set; }
 
         public TrainingHubContext(DbContextOptions<TrainingHubContext> options) 
             : base(options)
@@ -19,12 +19,34 @@ namespace traininghub.dac.ef
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Game>()
+                .HasOne(x => x.Organizer)
+                .WithMany(u => u.Games)
+                .HasForeignKey(x => x.OrganizerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Game>()
+               .HasOne(x => x.Venue)
+               .WithMany(u => u.Games)
+               .HasForeignKey(x => x.VenueId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Challenge>()
+                .HasOne(x => x.Game)
+                .WithMany(y => y.Challenges)
+                .HasForeignKey(x => x.GameId);
+
             //modelBuilder.Entity<Student>().ToTable("Student");
         }
 
         IQueryable<T> IDbDataProvider.AsQueryable<T>()
         {
             return this.Set<T>().AsQueryable();
+        }
+
+        DbSet<T> IDbDataProvider.GetDbSet<T>()
+        {
+            return this.Set<T>();
         }
     }
 }

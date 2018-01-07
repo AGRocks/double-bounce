@@ -13,6 +13,6 @@ namespace Traininghub.Data
         public Sport FavoriteSport { get; set; }
         public bool IsActivated { get; set; }
 
-        public virtual ICollection<User> Friends { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
     }
 }

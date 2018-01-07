@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using traininghub.api.AutoMapper;
+using traininghub.core;
 using traininghub.dac.ef;
 using traininghub.dac.ef.Common;
 using Traininghub.Data;
@@ -30,10 +31,11 @@ namespace traininghub.api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TrainingHubContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                    options.UseSqlServer(Configuration.GetConnectionString("TrainingHubContextConnection")));
 
             services.AddMvc();
 
+            services.AddTransient<IGameOrganizer, GameOrganizer>();
             services.AddTransient<IMapper>((s) => Mapper.Instance);
             services.AddTransient<IDbDataProvider, TrainingHubContext>();
             services.AddTransient<IReadOnlyRepository<Game>, ReadOnlyRepository<Game>>();

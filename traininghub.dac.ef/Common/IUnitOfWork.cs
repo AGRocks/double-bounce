@@ -2,7 +2,7 @@
 
 namespace traininghub.dac.ef.Common
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork
     {
         Task SaveAsync();
         void Save();

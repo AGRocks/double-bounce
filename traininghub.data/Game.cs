@@ -15,12 +15,10 @@ namespace Traininghub.Data
         public int VenueId { get; set; }
         public SkillLevel SkillLevel { get; set; }
         public Status Status { get; set; }
-        public int UserId { get; set; }
+        public int OrganizerId { get; set; }
         
-        public virtual User User { get; set; }
+        public virtual User Organizer { get; set; }
         public virtual Venue Venue { get; set; }
-
-        public virtual ICollection<AcceptedGameInvitation> AcceptedGameInvitations { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Challenge> Challenges { get; set; }
     }
 }

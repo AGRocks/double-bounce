@@ -1,76 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Traininghub.Data;
 
 namespace traininghub.dac.ef.Common
 {
-    public class Repository<T> : IRepository<T> where T : class, IClientEntity
+    public class Repository<T> : IRepository<T> where T: class, IClientEntity
     {
-        private IDbSet<T> context;
-        private IUnitOfWork unitOfWork;
-        private IDbDataProvider dataProvider;
+        private readonly DbSet<T> context;
+        private readonly IUnitOfWork unitOfWork;
 
         public Repository(IDbDataProvider dataProvider)
         {
-            this.context = dataProvider.AsQueryable<T>();
-            this.dataProvider = dataProvider;
-            unitOfWork = dataProvider as IUnitOfWork;
-        }
-
-        public void Insert(T entity)
-        {
-            context.Add(entity);
-        }
-
-        public void Delete(T entity)
-        {
-            context.Remove(entity);
-        }
-
-        public IEnumerable<T> Find(Func<T, bool> predicate)
-        {
-            return context.Where(predicate);
-        }
-
-        public IEnumerable<T> GetAll()
-        {
-            return context;
-        }
-
-        public T GetById(long id)
-        {
-            return context.FirstOrDefault(x => x.Id == id);
-        }
-
-        public T FirstOrDefault(Func<T, bool> predicate)
-        {
-            return context.FirstOrDefault(predicate);
+            this.context = dataProvider.GetDbSet<T>();
+            this.unitOfWork = dataProvider;
         }
 
         public void Attach(T entity)
         {
             this.context.Attach(entity);
         }
-        #region IUnitOfWork Members
+
+        public void Delete(T entity)
+        {
+            this.context.Remove(entity);
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<T> Find(Func<T, bool> predicate)
+        {
+            return this.context.Where(predicate);
+        }
+
+        public T FirstOrDefault(Func<T, bool> predicate)
+        {
+            return this.context.FirstOrDefault(predicate);
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return this.context;
+        }
+
+        public T GetById(long id)
+        {
+            return this.context.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Insert(T entity)
+        {
+            this.context.Add(entity);
+        }
 
         public void Save()
         {
-            if (unitOfWork != null)
-                unitOfWork.Save();
+            this.unitOfWork.Save();
         }
 
         public Task SaveAsync()
         {
-            if (unitOfWork != null)
-                return unitOfWork.SaveAsync();
-
-            return Task.Delay(0);
+            return this.unitOfWork.SaveAsync();
         }
-
-        #endregion
     }
 }

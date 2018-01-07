@@ -45,11 +45,11 @@ namespace traininghub.api.Controllers
         }
 
         [HttpGet]
-        [Route("byuser/{int:userId}")]
+        [Route("byuser/{userId:int}")]
         public IEnumerable<GameViewModel> GetGamesByUserId(int userId)
         {
             return this.gamesRepo
-                       .Find(x => x.UserId == userId)
+                       .Find(x => x.OrganizerId == userId)
                        .Select(x => this.mapper.Map<GameViewModel>(x));
         }
 
