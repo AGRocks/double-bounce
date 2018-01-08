@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using traininghub.dac.ef.Common;
 using Traininghub.Data;
 
 namespace traininghub.core
 {
-    public interface IGameOrganizer
+    public interface IGameOrganizer : IUnitOfWork
     {
-        int Create(Game game);
-        bool AcceptChallenge(int challengeId, int userId);
-        bool IssueChallenge(int gameId, int userId);
-        bool Cancel(int gameId, int userId);
+        void CreateGame(Game game);
+        void CancelGame(int gameId, int userId);
+        void AcceptChallenge(int challengeId, int userId);
+        void IssueChallenge(int gameId, int userId);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace traininghub.api.ViewModels
+namespace traininghub.mobile.models
 {
-    public class GameViewModel
+    public class Game
     {
         public int Id { get; set; }
         public string Sport { get; set; }

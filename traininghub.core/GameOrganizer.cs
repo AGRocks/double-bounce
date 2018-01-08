@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using traininghub.dac.ef.Common;
 using Traininghub.Data;
 
 namespace traininghub.core
 {
-    public class GameOrganizer : IGameOrganizer, IUnitOfWork
+    public class GameOrganizer : IGameOrganizer
     {
         private readonly IRepository<Game> gameRepo;
         private readonly IRepository<Challenge> challengeRepo;
+        private readonly IUnitOfWork unitOfWork;
 
         public GameOrganizer(
             IRepository<Game> gameRepo, 
@@ -18,9 +17,10 @@ namespace traininghub.core
         {
             this.gameRepo = gameRepo;
             this.challengeRepo = challengeRepo;
+            this.unitOfWork = gameRepo;
         }
 
-        public bool AcceptChallenge(int challengeId, int userId)
+        public void AcceptChallenge(int challengeId, int userId)
         {
             var challenge = this.challengeRepo.GetById(challengeId);
             var game = challenge.Game;
@@ -30,13 +30,10 @@ namespace traininghub.core
                 game.Status = Status.Full;
                 this.challengeRepo.Attach(challenge);
                 this.gameRepo.Attach(game);
-                return true;
             } 
-
-            return false;
         }
 
-        public bool Cancel(int gameId, int userId)
+        public void CancelGame(int gameId, int userId)
         {
             var game = this.gameRepo.GetById(gameId);
             if (game.OrganizerId == userId)
@@ -46,24 +43,36 @@ namespace traininghub.core
             }
         }
 
-        public int Create(Game game)
+        public void CreateGame(Game game)
         {
-            throw new NotImplementedException();
+            this.gameRepo.Insert(game);
         }
 
-        public bool IssueChallenge(int gameId, int userId)
+        public void IssueChallenge(int gameId, int userId)
         {
-            throw new NotImplementedException();
+            var game = this.gameRepo.GetById(gameId);
+            if (game != null && game.Status == Status.Active)
+            {
+                var challenge = new Challenge
+                {
+                    ChallengeTime = DateTime.Now,
+                    GameId = gameId,
+                    IsConfirmed = false,
+                    UserId = userId
+                };
+
+                this.challengeRepo.Insert(challenge);
+            }
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            this.unitOfWork.Save();
         }
 
         public Task SaveAsync()
         {
-            throw new NotImplementedException();
+            return this.unitOfWork.SaveAsync();
         }
     }
 }

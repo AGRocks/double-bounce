@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Traininghub.Data;
@@ -24,14 +23,10 @@ namespace traininghub.dac.ef.Common
             this.context.Attach(entity);
         }
 
-        public void Delete(T entity)
-        {
-            this.context.Remove(entity);
-        }
-
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var entity = this.GetById(id);
+            this.context.Remove(entity);
         }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)

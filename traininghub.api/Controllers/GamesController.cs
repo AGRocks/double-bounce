@@ -53,36 +53,21 @@ namespace traininghub.api.Controllers
                        .Select(x => this.mapper.Map<GameViewModel>(x));
         }
 
-        [HttpPut]
-        [Route("accept")]
-        public IActionResult AcceptGame(int gameId, int userId)
-        {
-            var success = this.organizer.Accept(gameId, userId);
-            if (success)
-            {
-                return Ok("Game challenge accepted!");
-            }
-            else
-            {
-                return BadRequest("Can't accept challenge. It's eigther canceled, or already taken by other player.");
-            }
-        }
-
         [HttpPost]
-        [Route("create")]
-        public IActionResult CreateGame(GameViewModel game)
+        public IActionResult CreateGame([FromBody] GameViewModel game)
         {
             var newGame = this.mapper.Map<Game>(game);
-            var gameId = this.organizer.Create(newGame);
+            this.organizer.CreateGame(newGame);
+            this.organizer.Save();
+            return Ok(newGame.Id);
+        }
 
-            if (gameId > 0)
-            {
-                return Ok(gameId);
-            }
-            else
-            {
-                return BadRequest("Error occured. Please try again.");
-            }
+        [HttpDelete]
+        public IActionResult CancelGame([FromBody] GameViewModel game)
+        {
+            this.organizer.CancelGame(game.Id, game.OrganizerId);
+            this.organizer.Save();
+            return Ok();
         }
     }
 }

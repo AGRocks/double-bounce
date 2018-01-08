@@ -2,6 +2,7 @@
 using Traininghub.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace traininghub.dac.ef
 {
@@ -35,8 +36,6 @@ namespace traininghub.dac.ef
                 .HasOne(x => x.Game)
                 .WithMany(y => y.Challenges)
                 .HasForeignKey(x => x.GameId);
-
-            //modelBuilder.Entity<Student>().ToTable("Student");
         }
 
         IQueryable<T> IDbDataProvider.AsQueryable<T>()
@@ -47,6 +46,16 @@ namespace traininghub.dac.ef
         DbSet<T> IDbDataProvider.GetDbSet<T>()
         {
             return this.Set<T>();
+        }
+
+        public Task SaveAsync()
+        {
+            return SaveChangesAsync();
+        }
+
+        public void Save()
+        {
+            this.SaveChanges();
         }
     }
 }
