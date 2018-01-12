@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using traininghub.api.ViewModels;
@@ -30,8 +31,11 @@ namespace traininghub.api.Controllers
         [Route("avaliable")]
         public IEnumerable<GameViewModel> GetAvaliableGames()
         {
-            return this.gamesRepo
-                       .Find(x => x.Status == Status.Active)
+            return this.gamesRepo.GetAll()
+                       .Where(x => x.Status == Status.Active)
+                       .Include(x => x.Organizer)
+                       .Include(x => x.Venue)
+                       .AsEnumerable()
                        .Select(x => this.mapper.Map<GameViewModel>(x));
         }
 
@@ -41,6 +45,9 @@ namespace traininghub.api.Controllers
         {
             return this.gamesRepo
                        .GetAll()
+                       .Include(x => x.Organizer)
+                       .Include(x => x.Venue)
+                       .AsEnumerable()
                        .Select(x => this.mapper.Map<GameViewModel>(x));
         }
 
@@ -48,8 +55,11 @@ namespace traininghub.api.Controllers
         [Route("byuser/{userId:int}")]
         public IEnumerable<GameViewModel> GetGamesByUserId(int userId)
         {
-            return this.gamesRepo
-                       .Find(x => x.OrganizerId == userId)
+            return this.gamesRepo.GetAll()
+                       .Where(x => x.OrganizerId == userId)
+                       .Include(x => x.Organizer)
+                       .Include(x => x.Venue)
+                       .AsEnumerable()
                        .Select(x => this.mapper.Map<GameViewModel>(x));
         }
 

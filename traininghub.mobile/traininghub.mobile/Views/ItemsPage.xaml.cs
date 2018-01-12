@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using traininghub.mobile.Models;
-using traininghub.mobile.Views;
 using traininghub.mobile.ViewModels;
+using traininghub.mobile.models;
 
 namespace traininghub.mobile.Views
 {
@@ -27,7 +21,7 @@ namespace traininghub.mobile.Views
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as Item;
+            var item = args.SelectedItem as Game;
             if (item == null)
                 return;
 

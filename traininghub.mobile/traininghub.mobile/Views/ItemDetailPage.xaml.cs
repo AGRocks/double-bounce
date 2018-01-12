@@ -3,8 +3,8 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using traininghub.mobile.Models;
 using traininghub.mobile.ViewModels;
+using traininghub.mobile.models;
 
 namespace traininghub.mobile.Views
 {
@@ -24,10 +24,10 @@ namespace traininghub.mobile.Views
         {
             InitializeComponent();
 
-            var item = new Item
+            var item = new Game
             {
-                Text = "Item 1",
-                Description = "This is an item description."
+                Sport = "Squash",
+                VenueName = "Hasta"
             };
 
             viewModel = new ItemDetailViewModel(item);

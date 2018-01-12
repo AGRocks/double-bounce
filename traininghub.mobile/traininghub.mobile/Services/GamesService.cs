@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using traininghub.mobile.models;
 
+[assembly: Xamarin.Forms.Dependency(typeof(traininghub.mobile.Services.GamesService))]
 namespace traininghub.mobile.Services
 {
     public class GamesService : IDataStore<Game>
@@ -18,13 +19,13 @@ namespace traininghub.mobile.Services
             this.http = new HttpClient();
             http.MaxResponseContentBufferSize = 256000;
 
-            this.serviceUrl = "http:\\service.url";
+            this.serviceUrl = "http://traininghub-dev-api.azurewebsites.net/api/games";
         }
 
-        public async Task<bool> AddItemAsync(Game item)
+        public async Task<bool> AddItemAsync(Game game)
         {
             var uri = new Uri(string.Format(serviceUrl, string.Empty));
-            var json = JsonConvert.SerializeObject(item);
+            var json = JsonConvert.SerializeObject(game);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = null;
@@ -33,9 +34,9 @@ namespace traininghub.mobile.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> DeleteItemAsync(Game item)
+        public async Task<bool> DeleteItemAsync(Game game)
         {
-            var uri = new Uri(string.Format(this.serviceUrl, item.Id));
+            var uri = new Uri(string.Format(this.serviceUrl, game.Id));
             var result = await http.DeleteAsync(uri);
             return result.IsSuccessStatusCode;
         }

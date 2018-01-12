@@ -33,12 +33,13 @@ namespace traininghub.api
             services.AddDbContext<TrainingHubContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("TrainingHubContextConnection")));
 
-            services.AddMvc();
-
-            services.AddTransient<IGameOrganizer, GameOrganizer>();
+            services.AddMvc()
+                    .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddTransient<IMapper>((s) => Mapper.Instance);
             services.AddTransient<IDbDataProvider, TrainingHubContext>();
-            services.AddTransient<IReadOnlyRepository<Game>, ReadOnlyRepository<Game>>();
+            services.AddTransient(typeof(IReadOnlyRepository<>), typeof(ReadOnlyRepository<>));
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IGameOrganizer, GameOrganizer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

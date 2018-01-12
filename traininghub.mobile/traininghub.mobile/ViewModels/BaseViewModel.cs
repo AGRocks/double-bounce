@@ -5,14 +5,14 @@ using System.Runtime.CompilerServices;
 
 using Xamarin.Forms;
 
-using traininghub.mobile.Models;
 using traininghub.mobile.Services;
+using traininghub.mobile.models;
 
 namespace traininghub.mobile.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
+        public IDataStore<Game> DataStore => DependencyService.Get<IDataStore<Game>>() ?? new GamesService();
 
         bool isBusy = false;
         public bool IsBusy

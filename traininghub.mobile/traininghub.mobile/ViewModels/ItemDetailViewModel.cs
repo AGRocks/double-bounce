@@ -1,15 +1,15 @@
 ﻿using System;
-
-using traininghub.mobile.Models;
+using traininghub.mobile.models;
 
 namespace traininghub.mobile.ViewModels
 {
     public class ItemDetailViewModel : BaseViewModel
     {
-        public Item Item { get; set; }
-        public ItemDetailViewModel(Item item = null)
+        public Game Item { get; set; }
+
+        public ItemDetailViewModel(Game item = null)
         {
-            Title = item?.Text;
+            Title = item?.Sport + " " + item?.Date;
             Item = item;
         }
     }

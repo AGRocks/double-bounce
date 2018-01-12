@@ -39,7 +39,7 @@ namespace traininghub.dac.ef.Common
             return this.context.FirstOrDefault(predicate);
         }
 
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
             return this.context;
         }

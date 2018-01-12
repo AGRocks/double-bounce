@@ -19,7 +19,7 @@ namespace traininghub.dac.ef.Common
             return context.Where(predicate);
         }
 
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
             return context;
         }
