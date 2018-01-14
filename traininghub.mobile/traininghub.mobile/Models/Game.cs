@@ -9,6 +9,7 @@ namespace traininghub.mobile.models
         public int NumberOfPlayers { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan Duration { get; set; }
+        public int VenueId { get; set; }
         public string VenueName { get; set; }
         public string SkillLevel { get; set; }
         public string Status { get; set; }

@@ -2,11 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="traininghub.mobile.Views.ItemDetailPage"
+             xmlns:conv="clr-namespace:traininghub.mobile.Converters;"
              Title="{Binding Title}">
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="Text:" FontSize="Medium" />
-        <Label Text="{Binding Item.Sport}" FontSize="Small"/>
-        <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Item.SkilLevel}" FontSize="Small"/>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:TimeSpanToTimeStringConverter x:Key="timeToStringConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout Spacing="10" Padding="10">
+        <Label Text="Organizer" FontSize="Medium"/>
+        <Label Text="{Binding Item.OrganizerName}" FontSize="Small"/>
+        <BoxView HeightRequest="1" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource Accent}"/>
+        <StackLayout Padding="10">
+            <Label Text="Details" FontSize="Medium"/>
+            <Label Text="{Binding Item.Date, StringFormat='{0:MMMM d, HH:mm}'}" FontSize="Small"/>
+            <Label Text="{Binding Item.VenueName}" FontSize="Small"/>
+            <Label Text="{Binding Item.Duration, Converter={StaticResource timeToStringConverter}}" FontSize="Small"/>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

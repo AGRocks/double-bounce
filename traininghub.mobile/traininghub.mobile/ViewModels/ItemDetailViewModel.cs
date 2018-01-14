@@ -9,7 +9,7 @@ namespace traininghub.mobile.ViewModels
 
         public ItemDetailViewModel(Game item = null)
         {
-            Title = item?.Sport + " " + item?.Date;
+            Title = item?.OrganizerName;
             Item = item;
         }
     }

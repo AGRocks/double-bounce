@@ -11,8 +11,6 @@ namespace traininghub.mobile
 		public App ()
 		{
 			InitializeComponent();
-
-
             MainPage = new MainPage();
         }
 
