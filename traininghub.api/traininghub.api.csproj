@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <ApplicationInsightsResourceId>/subscriptions/6876e444-2e68-4bea-a334-f082f2dca68d/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/traininghub.api</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/6876e444-2e68-4bea-a334-f082f2dca68d/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/traininghub.api</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="automapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
   </ItemGroup>
 
@@ -25,6 +28,10 @@
     <ProjectReference Include="..\traininghub.core\traininghub.core.csproj" />
     <ProjectReference Include="..\traininghub.dac.ef\traininghub.dac.ef.csproj" />
     <ProjectReference Include="..\traininghub.data\Traininghub.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>

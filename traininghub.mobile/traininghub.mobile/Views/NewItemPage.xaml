@@ -2,19 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="traininghub.mobile.Views.NewItemPage"
-		     Title="New Item">
+		     Title="New game">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Save" Clicked="Save_Clicked" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Spacing="10" Padding="15">
             <Label Text="When" FontSize="Medium" />
-            <DatePicker Date="{Binding Item.Date}"/>
-            <Entry Text="{Binding Item.Date}" FontSize="Small" />
+            <DatePicker Date="{Binding Game.Date, Mode=TwoWay}"/>
             <Label Text="Where" FontSize="Medium" />
-            <Picker ItemsSource="{Binding Venues}" SelectedItem="{Binding Item.VenueName}"/>
+            <Picker ItemsSource="{Binding Venues}" SelectedItem="{Binding Game.VenueName}"/>
             <Label Text="Duration" FontSize="Medium" />
-            <TimePicker Time="{Binding Item.Duration}"/>
+            <TimePicker Time="{Binding Game.Duration}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

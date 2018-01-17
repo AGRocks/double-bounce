@@ -2,34 +2,37 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using traininghub.mobile.models;
-using System.Collections.Generic;
+using traininghub.mobile.ViewModels;
 
 namespace traininghub.mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewItemPage : ContentPage
     {
-        private List<string> venues;
-
-        public List<string> Venues => this.venues ?? (this.venues = new List<string> { "Hasta", "Redeco", "Jupiter", "Dlugosza" });
-
-        public Game Item { get; set; }
+        private readonly NewItemViewModel viewModel;
 
         public NewItemPage()
         {
             InitializeComponent();
 
-            Item = new Game
+            var newGame  = new Game
             {
-                VenueName = "Hasta"
+                VenueName = "Hasta",
+                Date = DateTime.Now,
+                Duration = TimeSpan.FromMinutes(60),
+                OrganizerId = 2,   
+                Sport = "Squash",
+                Status = "Active",
+                VenueId = 1,
+                NumberOfPlayers = 2                
             };
 
-            BindingContext = this;
+            BindingContext = viewModel = new NewItemViewModel(newGame);
         }
 
         async void Save_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send(this, "AddItem", Item);
+            MessagingCenter.Send(this, "AddItem", this.viewModel.Game.Dto);
             await Navigation.PopModalAsync();
         }
     }

@@ -18,7 +18,6 @@ namespace traininghub.mobile.Services
         {
             this.http = new HttpClient();
             http.MaxResponseContentBufferSize = 256000;
-
             this.serviceUrl = "http://traininghub-dev-api.azurewebsites.net/api/games";
         }
 
